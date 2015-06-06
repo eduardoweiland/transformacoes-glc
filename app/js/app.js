@@ -22,15 +22,11 @@
  * THE SOFTWARE.
  */
 
-require(['knockout', 'jquery', 'grammar', 'finiteautomaton', 'file-saver-js', 'ko-tagsinput', 'ko-textcontent'], function(ko, $, Grammar, FiniteAutomaton, saveAs) {
+require(['knockout', 'jquery', 'grammar', 'file-saver-js', 'ko-tagsinput'], function(ko, $, Grammar, saveAs) {
     'use strict';
 
-    // Carrega os plugins JavaScript do Bootstrap (usado para as abas)
-    require(['libs/bootstrap/dist/js/bootstrap.min.js']);
-
     function App() {
-        this.grammar   = new Grammar();
-        this.automaton = new FiniteAutomaton();
+        this.grammar = new Grammar();
     }
 
     App.prototype = {
@@ -61,20 +57,6 @@ require(['knockout', 'jquery', 'grammar', 'finiteautomaton', 'file-saver-js', 'k
                     for (var i = 0, l = json.grammar.productionRules.length; i < l; ++i) {
                         model.grammar.addProductionRule(json.grammar.productionRules[i]);
                     }
-
-                    // Reconhecedor
-                    model.automaton.rules.productions = {};
-                    for (var state in json.automaton.productions) {
-                        model.automaton.rules.productions[state] = {};
-                        for (var symbol in json.automaton.productions[state]) {
-                            model.automaton.rules.productions[state][symbol] = ko.observable(json.automaton.productions[state][symbol]);
-                        }
-                    }
-
-                    model.automaton.rules.symbols(json.automaton.symbols);
-                    model.automaton.rules.states(json.automaton.states);
-                    model.automaton.rules.startState(json.automaton.startState);
-                    model.automaton.rules.endStates(json.automaton.endStates);
                 }
                 catch (e) {
                     alert('Arquivo inválido');
