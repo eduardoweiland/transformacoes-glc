@@ -1,10 +1,10 @@
 {
-  "name": "manipulador-gramaticas",
+  "name": "tranformacoes-glc",
   "version": "0.1.0",
   "authors": [
     "Eduardo Weiland <eduardo@eduardoweiland.info>"
   ],
-  "description": "Trabalho de Linguagens Formais - UNISC",
+  "description": "Trabalho II de Linguagens Formais - UNISC",
   "license": "MIT",
   "homepage": "http://eduardoweiland.info",
   "private": true,

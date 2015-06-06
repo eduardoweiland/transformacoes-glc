@@ -1,16 +1,4 @@
 /app/libs
 /node_modules
-/doc/*.aux
-/doc/*.bak
-/doc/*.bbl
-/doc/*.blg
-/doc/*.fdb_latexmk
-/doc/*.fls
-/doc/*.log
-/doc/*.out
-/doc/*.pdf
-/doc/*.pyg
-/doc/*.synctex.gz
-/doc/*~
 /nbproject
 /.nbinfo

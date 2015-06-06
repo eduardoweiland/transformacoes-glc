@@ -1,23 +1,21 @@
 {
-  "name": "manipulador-gramaticas",
+  "name": "transformacoes-glc",
   "version": "0.1.0",
-  "description": "Trabalho de Linguagens Formais - UNISC",
+  "description": "Trabalho II de Linguagens Formais - UNISC",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eduardoweiland/manipulador-gramaticas.git"
+    "url": "https://github.com/eduardoweiland/tranformacoes-glc.git"
   },
   "author": "Eduardo Weiland <eduardo@eduardoweiland.info>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/eduardoweiland/manipulador-gramaticas/issues"
+    "url": "https://github.com/eduardoweiland/tranformacoes-glc/issues"
   },
-  "homepage": "https://github.com/eduardoweiland/manipulador-gramaticas",
+  "homepage": "https://github.com/eduardoweiland/tranformacoes-glc",
   "private": true,
   "devDependencies": {
-    "bower": "^1.4.1",
-    "grunt": "^0.4.5",
-    "grunt-latex": "^1.0.0"
+    "bower": "^1.4.1"
   },
   "scripts": {
     "postinstall": "bower install"
