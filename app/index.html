@@ -41,7 +41,7 @@ THE SOFTWARE.
         </div>
     </div>
     <header class="container-fluid navbar navbar-inverse navbar-static-top">
-        <div class="navbar-brand">Manipulador de Gramáticas</div>
+        <div class="navbar-brand">Tranformações em GLC</div>
         <div class="pull-right">
             <button class="btn btn-info navbar-btn" data-bind="click: save">
                 <i class="fa fa-save"></i> Salvar
@@ -56,17 +56,6 @@ THE SOFTWARE.
         </div>
     </header>
     <div class="container fade">
-        <nav role="navigation">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#manipulator" aria-controls="manipulator" role="tab" data-toggle="tab">Manipulador</a>
-                </li>
-                <li role="presentation">
-                    <a href="#recognizer" aria-controls="recognizer" role="tab" data-toggle="tab">Reconhecedor</a>
-                </li>
-            </ul>
-        </nav>
-        <div class="tab-content">
             <div id="manipulator" class="clearfix tab-pane fade in active" role="tabpanel" data-bind="with: grammar">
                 <div class="col-sm-6">
                     <div class="panel panel-primary">
@@ -121,158 +110,40 @@ THE SOFTWARE.
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <div class="alert alert-success text-center" role="alert" data-bind="visible: !completed()">
-                        Complete a definição da gramática e os resultados serão exibidos aqui.
-                    </div>
-                    <div class="panel panel-danger" data-bind="visible: completed">
+                    <div class="panel panel-danger">
                         <div class="panel-heading">
                             <h3 class="panel-title">
-                                <i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;Validação da Gramática
+                                <i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;Eliminar símbolos inúteis
+                            </Gramática>
+                        </div>
+                        <div class="panel-body">
+                        </div>
+                    </div>
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Retirar produções vazias
                             </h3>
                         </div>
                         <div class="panel-body">
-                            <div data-bind="foreach: validationErrors">
-                                <div class="alert alert-danger text-center" role="alert" data-bind="text: $data"></div>
-                            </div>
-                            <div data-bind="visible: validationErrors().length === 0" class="alert alert-success text-center" role="alert">
-                                Nenhum erro encontrado na gramática!
-                            </div>
                         </div>
                     </div>
-                    <div class="panel panel-warning" data-bind="visible: completed">
+                    <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">
-                                <i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Formalismo da Gramática
+                                <i class="fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;Fatorar
                             </h3>
                         </div>
                         <div class="panel-body">
-                            <pre data-bind="text: formalism"></pre>
                         </div>
                     </div>
-                    <div class="panel panel-info" data-bind="visible: completed">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">
-                                <i class="fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;Classificação da Gramática
-                            </h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="text-center" data-bind="visible: classification(), text: classification"></div>
-                        </div>
-                    </div>
-                    <div class="panel panel-success" data-bind="visible: completed">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">
-                                <i class="fa fa-gears"></i>&nbsp;&nbsp;&nbsp;Sentenças Geradas
-                            </h3>
-                        </div>
-                        <div class="panel-body" data-bind="foreach: generatedSentences ">
-                            <div class="text-center" data-bind="text: $data"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="recognizer" class="tab-pane fade" role="tabpanel" data-bind="with: automaton">
-                <div class="col-sm-6">
-                    <div class="panel panel-primary" data-bind="with: rules">
-                        <div class="panel-heading clearfix">
-                            <h3 class="panel-title">
-                                <i class="fa fa-table"></i>&nbsp;&nbsp;&nbsp;Tabela de Transição de Estados
-                            </h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="text-center">
-                                <button class="btn btn-sm btn-success" data-bind="click: addSymbol">
-                                    <i class="fa fa-plus"></i> ADICIONAR SÍMBOLO
-                                </button>
-                                <button class="btn btn-sm btn-success" data-bind="click: addState">
-                                    <i class="fa fa-plus"></i> ADICIONAR ESTADO
-                                </button>
-                            </div>
-                            <table class="table table-bordered table-spacing" data-bind="visible: symbols().length || states().length">
-                                <tbody>
-                                    <tr>
-                                        <th colspan="4" rowspan="2">&nbsp;</th>
-                                        <!-- ko if: symbols().length > 0 -->
-                                        <th data-bind="attr: { colspan: symbols().length}">Símbolos</th>
-                                        <!-- /ko -->
-                                        <th rowspan="2"></th>
-                                    </tr>
-                                    <tr>
-                                        <!-- ko foreach: symbols -->
-                                        <th data-bind="textcontent: $data"></th>
-                                        <!-- /ko -->
-                                    </tr>
-                                    <!-- ko foreach: states -->
-                                    <tr>
-                                        <!-- ko if: $index() === 0 -->
-                                        <th data-bind="attr: { rowspan: $parent.states().length}">Estados</th>
-                                        <!-- /ko -->
-                                        <th title="Estado Final"   class="pointer" data-bind="
-                                                text: ($parent.endStates.indexOf($data) >= 0) ? '*' : '',
-                                                click: $parent.toggleEndState.bind($parent)"></th>
-                                        <th title="Estado Inicial" class="pointer" data-bind="
-                                                html: ($data === $parent.startState()) ? '&rarr;' : '',
-                                                click: $parent.setStartState.bind($parent)"></th>
-                                        <th data-bind="textcontent: $data"></th>
-                                        <!-- ko foreach: $parent.symbols -->
-                                        <td data-bind="textcontent: $parentContext.$parent.productions[$parentContext.$data][$data]"></td>
-                                        <!-- /ko -->
-                                        <td>
-                                            <a href="#" data-bind="click: $parent.removeState.bind($parent) ">
-                                                <i class="fa fa-times"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <!-- /ko -->
-                                    <tr>
-                                        <th colspan="4"></th>
-                                        <!-- ko foreach: symbols -->
-                                        <td>
-                                            <a href="#" data-bind="click: $parent.removeSymbol.bind($parent) ">
-                                                <i class="fa fa-times"></i>
-                                            </a>
-                                        </td>
-                                        <!-- /ko -->
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
                     <div class="panel panel-success">
-                        <div class="panel-heading clearfix">
+                        <div class="panel-heading">
                             <h3 class="panel-title">
-                                <i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;&nbsp;Reconhecimento de Sentenças
+                                <i class="fa fa-gears"></i>&nbsp;&nbsp;&nbsp;Eliminar recursão à esquerda
                             </h3>
                         </div>
-                        <div class="panel-body text-center">
-                            <input data-bind="textInput: sentence" class="form-control" placeholder="Digite a sentença para reconhecer com o autômato" />
-                            <div data-bind="visible: sentence">
-                                <table class="table table-bordered table-spacing">
-                                    <thead>
-                                        <tr>
-                                            <th>Estado Atual</th>
-                                            <th>Símbolo Lido</th>
-                                            <th>Próximo Estado</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody data-bind="foreach: recognition">
-                                        <tr>
-                                            <td data-bind="text: currentState"></td>
-                                            <td data-bind="text: readSymbol"></td>
-                                            <td data-bind="text: nextState"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div data-bind="visible: recognized()" class="alert alert-success text-center" role="alert">
-                                    <i class="fa fa-check-circle"></i> Sentença reconhecida!
-                                </div>
-                                <div data-bind="visible: !recognized()" class="alert alert-danger text-center" role="alert">
-                                    <i class="fa fa-times-circle"></i> Sentença não foi reconhecida!
-                                </div>
-                            </div>
+                        <div class="panel-body">
                         </div>
                     </div>
                 </div>
