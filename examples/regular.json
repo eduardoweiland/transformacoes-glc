@@ -1,0 +1,72 @@
+{
+  "grammar": {
+    "nonTerminalSymbols": [
+      "S",
+      "A",
+      "B"
+    ],
+    "terminalSymbols": [
+      "a",
+      "b"
+    ],
+    "productionSetSymbol": "P",
+    "productionStartSymbol": "S",
+    "productionRules": [
+      {
+        "leftSide": "S",
+        "rightSide": [
+          "bA",
+          "aB"
+        ]
+      },
+      {
+        "leftSide": "A",
+        "rightSide": [
+          "bB",
+          "aS"
+        ]
+      },
+      {
+        "leftSide": "B",
+        "rightSide": [
+          "b",
+          "aA",
+          "ε"
+        ]
+      }
+    ]
+  },
+  "automaton": {
+    "symbols": [
+      "a",
+      "b",
+      "c"
+    ],
+    "states": [
+      "Q0",
+      "Q1",
+      "Q2"
+    ],
+    "startState": "Q0",
+    "endStates": [
+      "Q2"
+    ],
+    "productions": {
+      "Q0": {
+        "a": "Q1",
+        "b": "Q1",
+        "c": ""
+      },
+      "Q1": {
+        "a": "Q1",
+        "b": "Q1",
+        "c": "Q2"
+      },
+      "Q2": {
+        "a": "",
+        "b": "Q0",
+        "c": "Q2"
+      }
+    }
+  }
+}

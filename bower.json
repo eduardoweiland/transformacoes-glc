@@ -1,0 +1,31 @@
+{
+  "name": "manipulador-gramaticas",
+  "version": "0.1.0",
+  "authors": [
+    "Eduardo Weiland <eduardo@eduardoweiland.info>"
+  ],
+  "description": "Trabalho de Linguagens Formais - UNISC",
+  "license": "MIT",
+  "homepage": "http://eduardoweiland.info",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "app/libs"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "jquery": "~2.1.3",
+    "knockout": "~3.3.0",
+    "fontawesome": "~4.3.0",
+    "requirejs": "~2.1.17",
+    "requirejs-plugin-bower": "*",
+    "metro-bootstrap": "*",
+    "bootstrap-tagsinput": "~0.4.2",
+    "webfont-notosans": "~0.1.0",
+    "require-css": "~0.1.8",
+    "file-saver-saveas-js": "~1.20150304.1"
+  },
+  "resolutions": {
+    "bootstrap": "~3.3.4"
+  }
+}
