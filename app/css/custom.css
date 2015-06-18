@@ -62,6 +62,17 @@ body, h1, h2, h3, h4, h5, h6 {
     overflow-x: auto;
 }
 
+.panel-heading {
+    position: relative;
+}
+
+.panel-heading .btn-group {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 3px 10px;
+}
+
 footer {
     margin-bottom: 15px;
 }
