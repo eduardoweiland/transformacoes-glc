@@ -41,34 +41,6 @@ define(['knockout', 'productionrule', 'utils'], function(ko, ProductionRule, uti
     var INDENT = '    ';
 
     /**
-     * Classes de gramáticas existentes e seus respectivos tipos na hierarquia
-     * de Chomsky.
-     *
-     * @readonly
-     * @enum {number}
-     */
-    var CLASSES = {
-        UNRESTRICTED:      0,
-        CONTEXT_SENSITIVE: 1,
-        CONTEXT_FREE:      2,
-        REGULAR:           3
-    };
-
-    /**
-     * Classes de gramáticas existentes e seus respectivos tipos na hierarquia
-     * de Chomsky.
-     *
-     * @readonly
-     * @enum {number}
-     */
-    var CLASS_NAMES = [
-        'Irrestrita',
-        'Sensível ao Contexto',
-        'Livre de Contexto',
-        'Regular'
-    ];
-
-    /**
      * Representação de uma gramática regular ou livre de contexto.
      *
      * @class
@@ -192,38 +164,16 @@ define(['knockout', 'productionrule', 'utils'], function(ko, ProductionRule, uti
          *
          * @return {string} O nome da classe à qual a gramática pertence.
          */
-        getGrammarClass: function() {
-            var clazz = CLASSES.REGULAR,
-                rules = this.productionRules();
+        isContextFree: function() {
+            var rules = this.productionRules();
 
             for (var i = 0, l = rules.length; i < l; ++i) {
-                if (!rules[i].isRegular()) {
-                    --clazz;
-                    break;
+                if (!rules[i].isContextFree()) {
+                    return false;
                 }
             }
 
-            // Se falhou na verificação de gramática regular, verifica se é livre de contexto
-            if (clazz === CLASSES.CONTEXT_FREE) {
-                for (var i = 0, l = rules.length; i < l; ++i) {
-                    if (!rules[i].isContextFree()) {
-                        --clazz;
-                        break;
-                    }
-                }
-            }
-
-            // Se falhou na verificação de gramática livre de contexto, verifica se é sensível ao contexto
-            if (clazz === CLASSES.CONTEXT_SENSITIVE) {
-                for (var i = 0, l = rules.length; i < l; ++i) {
-                    if (!rules[i].isContextSensitive()) {
-                        --clazz;
-                        break;
-                    }
-                }
-            }
-
-            return CLASS_NAMES[clazz];
+            return true;
         },
 
         /**
