@@ -32,10 +32,46 @@ define(function() {
          *
          * @param {array} a
          * @param {array} b
+         * @returns {array} Um novo array.
          */
         arrayIntersection: function(a, b) {
             return a.filter(function(i) {
                 return b.indexOf(i) > -1;
+            });
+        },
+
+        /**
+         * Retorna a união dos arrays `a` e `b` sem valores repetidos.
+         *
+         * @param {array} a
+         * @param {array} b
+         * @returns {array} Um novo array.
+         */
+        arrayUnion: function(a, b) {
+            var other = [];
+            for (var i = 0, l = a.length; i < l; ++i) {
+                if (other.indexOf(a[i]) === -1) {
+                    other.push(a[i]);
+                }
+            }
+            for (var i = 0, l = b.length; i < l; ++i) {
+                if (other.indexOf(b[i]) === -1) {
+                    other.push(b[i]);
+                }
+            }
+            return other;
+        },
+
+        /**
+         * Remove valores do array `b` que estão presentes em `a`.
+         *
+         * @param {array} a
+         * @param {array} b
+         * @returns {array} Um novo array.
+         */
+        arrayRemove: function(a, b) {
+            return a.filter(function(i) {
+                return b.indexOf(i) === -1;
             });
         },
 
@@ -54,8 +90,8 @@ define(function() {
          *
          * @param {string} string String na qual procurar.
          * @param {string[]} array Valores que devem ser procurados.
-         * @returns {[number, string]} Retorna um array onde o primeiro valor é o índice de um dos valores procurados e o
-         * segundo é o valor que foi encontrado nesse índice. Se nada for encontrado, retorna um array com -1 e null.
+         * @returns {[number, string]} Retorna um array onde o primeiro valor é o índice de um dos valores procurados e
+         * o segundo é o valor que foi encontrado nesse índice. Se nada for encontrado, retorna um array com -1 e null.
          */
         indexOfAny: function(string, array) {
             for (var i = 0, l = array.length; i < l; ++i) {
