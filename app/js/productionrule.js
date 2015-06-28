@@ -54,6 +54,7 @@ define(['knockout'], function(ko) {
          * @constructs
          *
          * @param {Grammar} grammar Gramática à qual a regra de produção pertence.
+         * @param {object} data Dados para inicializar a regra de produção.
          */
         init: function(grammar, data) {
             data = data || {};

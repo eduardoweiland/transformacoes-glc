@@ -64,7 +64,6 @@ define(['knockout', 'productionrule', 'utils'], function(ko, ProductionRule, uti
             this.completed        = ko.pureComputed(this.isCompleted,       this);
             this.validationErrors = ko.pureComputed(this.validate,          this);
             this.formalism        = ko.pureComputed(this.toFormalismString, this);
-            this.classification   = ko.pureComputed(this.getGrammarClass,   this);
         },
 
         /**
@@ -178,6 +177,8 @@ define(['knockout', 'productionrule', 'utils'], function(ko, ProductionRule, uti
 
         /**
          * Adiciona uma nova regra de produção à gramática.
+         *
+         * @param {object} data Dados para inicializar a regra de produção.
          */
         addProductionRule: function(data) {
             this.productionRules.push(new ProductionRule(this, data));

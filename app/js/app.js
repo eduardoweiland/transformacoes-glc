@@ -22,11 +22,15 @@
  * THE SOFTWARE.
  */
 
-require(['knockout', 'jquery', 'grammar', 'file-saver-js', 'ko-tagsinput'], function(ko, $, Grammar, saveAs) {
+require(['knockout', 'jquery', 'grammar', 'transformations', 'file-saver-js', 'ko-tagsinput'], function(ko, $, Grammar, Transformations, saveAs) {
     'use strict';
 
     function App() {
         this.grammar = new Grammar();
+        this.step1 = ko.observable();
+        this.step2 = ko.observable();
+        this.step3 = ko.observable();
+        this.step4 = ko.observable();
     }
 
     App.prototype = {
@@ -65,6 +69,22 @@ require(['knockout', 'jquery', 'grammar', 'file-saver-js', 'ko-tagsinput'], func
             };
 
             reader.readAsText(files[0]);
+        },
+
+        runStep1: function() {
+            this.step1(Transformations.removeUselessSymbols(this.grammar));
+        },
+
+        runStep2: function() {
+            this.step2(Transformations.removeEmptyProductions(this.step1()));
+        },
+
+        runStep3: function() {
+            this.step3(Transformations.factor(this.step2()));
+        },
+
+        runStep4: function() {
+            this.step4(Transformations.removeLeftRecursion(this.step3()));
         }
     };
 

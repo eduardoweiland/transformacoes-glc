@@ -1,27 +1,4 @@
 <!DOCTYPE html>
-<!--
-The MIT License
-
-Copyright 2015 Eduardo Weiland.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
--->
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8" />
@@ -41,125 +18,128 @@ THE SOFTWARE.
         </div>
     </div>
     <header class="container-fluid navbar navbar-inverse navbar-static-top">
-        <div class="navbar-brand">Tranformações em GLC</div>
+        <div class="navbar-brand">Transformações em GLC</div>
         <div class="pull-right">
             <button class="btn btn-info navbar-btn" data-bind="click: save">
                 <i class="fa fa-save"></i> Salvar
             </button>
             <div class="btn btn-info navbar-btn btn-file">
-                <i class="fa fa-folder-open-o"></i> Abrir
+                <i class="fa fa-folder-open"></i> Abrir
                 <input type="file" accept=".json" data-bind="event: { change: open }"/>
             </div>
             <a href="https://github.com/eduardoweiland/transformacoes-glc" class="btn btn-info navbar-btn">
                 <i class="fa fa-code"></i> Código Fonte
             </a>
             <a href="https://github.com/eduardoweiland/transformacoes-glc/wiki" class="btn btn-info navbar-btn">
-                <i class="fa fa-question-circle"></i> Ajuda
+                <i class="fa fa-question"></i> Ajuda
             </a>
         </div>
     </header>
     <div class="container fade">
-            <div id="manipulator" class="clearfix tab-pane fade in active" role="tabpanel" data-bind="with: grammar">
-                <div class="col-sm-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading clearfix">
-                            <h3 class="panel-title">
-                                <i class="fa fa-terminal"></i>&nbsp;&nbsp;&nbsp;Entrada da Gramática
-                            </h3>
+        <div id="manipulator" class="clearfix tab-pane fade in active" role="tabpanel">
+            <div class="col-sm-6" data-bind="with: grammar">
+                <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                        <h3 class="panel-title">
+                            <i class="fa fa-terminal"></i>&nbsp;&nbsp;&nbsp;Entrada da Gramática
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Símbolos não terminais</label>
+                            <select data-bind="tagsinput: true, selectedOptions: nonTerminalSymbols" multiple="multiple"></select>
                         </div>
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label>Símbolos não terminais</label>
-                                <select data-bind="tagsinput: true, selectedOptions: nonTerminalSymbols" multiple="multiple"></select>
-                            </div>
-                            <div class="form-group">
-                                <label>Símbolos terminais</label>
-                                <select data-bind="tagsinput: true, selectedOptions: terminalSymbols" multiple="multiple"></select>
-                            </div>
-                            <div class="form-group">
-                                <label>Símbolo do conjunto de produções</label>
-                                <input data-bind="value: productionSetSymbol" class="form-control" type="text" placeholder="Exemplo: P" />
-                            </div>
-                            <div class="form-group">
-                                <label>Símbolo de início das produções</label>
-                                <input data-bind="value: productionStartSymbol" class="form-control" type="text" placeholder="Exemplo: S" />
-                            </div>
-                            <div class="form-group">
-                                <label>Conjunto de produções</label>
-                                <div data-bind="foreach: productionRules">
-                                    <div class="production-rule clearfix">
-                                        <input data-bind="value: leftSide" class="form-control left" type="text" />
-                                        <div class="arrow text-center"><i class="fa fa-arrow-right"></i></div>
-                                        <div class="input-group right pull-right">
-                                            <select data-bind="tagsinput: true, selectedOptions: rightSide" multiple="multiple"></select>
-                                            <span class="input-group-btn">
-                                                <button data-bind="click: addEmptySentence" class="btn btn-info" type="button" title="Sentença vazia">
-                                                    <strong>&epsilon;</strong>
-                                                </button>
-                                                <button data-bind="click: $parent.removeRule.bind($parent)" class="btn btn-danger" type="button" title="Remover">
-                                                    <i class="fa fa-remove"></i>
-                                                </button>
-                                            </span>
-                                        </div>
+                        <div class="form-group">
+                            <label>Símbolos terminais</label>
+                            <select data-bind="tagsinput: true, selectedOptions: terminalSymbols" multiple="multiple"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Símbolo do conjunto de produções</label>
+                            <input data-bind="value: productionSetSymbol" class="form-control" type="text" placeholder="Exemplo: P" />
+                        </div>
+                        <div class="form-group">
+                            <label>Símbolo de início das produções</label>
+                            <input data-bind="value: productionStartSymbol" class="form-control" type="text" placeholder="Exemplo: S" />
+                        </div>
+                        <div class="form-group">
+                            <label>Conjunto de produções</label>
+                            <div data-bind="foreach: productionRules">
+                                <div class="production-rule clearfix">
+                                    <input data-bind="value: leftSide" class="form-control left" type="text" />
+                                    <div class="arrow text-center"><i class="fa fa-arrow-right"></i></div>
+                                    <div class="input-group right pull-right">
+                                        <select data-bind="tagsinput: true, selectedOptions: rightSide" multiple="multiple"></select>
+                                        <span class="input-group-btn">
+                                            <button data-bind="click: addEmptySentence" class="btn btn-info" type="button" title="Sentença vazia">
+                                                <strong>&epsilon;</strong>
+                                            </button>
+                                            <button data-bind="click: $parent.removeRule.bind($parent)" class="btn btn-danger" type="button" title="Remover">
+                                                <i class="fa fa-remove"></i>
+                                            </button>
+                                        </span>
                                     </div>
                                 </div>
-                                <div class="text-center">
-                                    <button data-bind="click: addProductionRule" class="btn btn-success">
-                                        <i class="fa fa-plus"></i> ADICIONAR
-                                    </button>
-                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button data-bind="click: addProductionRule" class="btn btn-success">
+                                    <i class="fa fa-plus"></i> ADICIONAR
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <div class="btn-group pull-right">
-                                <button class="btn btn-danger btn-sm"><i class="fa fa-circle-o-notch"></i> Executar</button>
-                            </div>
-                            <h3 class="panel-title">
-                                <i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;Eliminar símbolos inúteis
-                            </h3>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <div class="btn-group pull-right">
+                            <button data-bind="click: runStep1" class="btn btn-danger btn-sm"><i class="fa fa-circle-o-notch"></i> Executar</button>
                         </div>
-                        <div class="panel-body">
-                        </div>
+                        <h3 class="panel-title">
+                            <i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;Eliminar símbolos inúteis
+                        </h3>
                     </div>
-                    <div class="panel panel-warning">
-                        <div class="panel-heading">
-                            <div class="btn-group pull-right">
-                                <button class="btn btn-warning btn-sm"><i class="fa fa-circle-o-notch"></i> Executar</button>
-                            </div>
-                            <h3 class="panel-title">
-                                <i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Retirar produções vazias
-                            </h3>
-                        </div>
-                        <div class="panel-body">
-                        </div>
+                    <div class="panel-body" data-bind="with: step1">
+                        <pre data-bind="text: formalism"></pre>
                     </div>
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <div class="btn-group pull-right">
-                                <button class="btn btn-info btn-sm"><i class="fa fa-circle-o-notch"></i> Executar</button>
-                            </div>
-                            <h3 class="panel-title">
-                                <i class="fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;Fatorar
-                            </h3>
+                </div>
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <div class="btn-group pull-right">
+                            <button data-bind="click: runStep2" class="btn btn-warning btn-sm"><i class="fa fa-circle-o-notch"></i> Executar</button>
                         </div>
-                        <div class="panel-body">
-                        </div>
+                        <h3 class="panel-title">
+                            <i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;Retirar produções vazias
+                        </h3>
                     </div>
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <div class="btn-group pull-right">
-                                <button class="btn btn-success btn-sm"><i class="fa fa-circle-o-notch"></i> Executar</button>
-                            </div>
-                            <h3 class="panel-title">
-                                <i class="fa fa-gears"></i>&nbsp;&nbsp;&nbsp;Eliminar recursão à esquerda
-                            </h3>
+                    <div class="panel-body" data-bind="with: step2">
+                        <pre data-bind="text: formalism"></pre>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="btn-group pull-right">
+                            <button data-bind="click: runStep3" class="btn btn-info btn-sm"><i class="fa fa-circle-o-notch"></i> Executar</button>
                         </div>
-                        <div class="panel-body">
+                        <h3 class="panel-title">
+                            <i class="fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;Fatorar
+                        </h3>
+                    </div>
+                    <div class="panel-body" data-bind="with: step3">
+                        <pre data-bind="text: formalism"></pre>
+                    </div>
+                </div>
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <div class="btn-group pull-right">
+                            <button data-bind="click: runStep4" class="btn btn-success btn-sm"><i class="fa fa-circle-o-notch"></i> Executar</button>
                         </div>
+                        <h3 class="panel-title">
+                            <i class="fa fa-gears"></i>&nbsp;&nbsp;&nbsp;Eliminar recursão à esquerda
+                        </h3>
+                    </div>
+                    <div class="panel-body" data-bind="with: step4">
+                        <pre data-bind="text: formalism"></pre>
                     </div>
                 </div>
             </div>
