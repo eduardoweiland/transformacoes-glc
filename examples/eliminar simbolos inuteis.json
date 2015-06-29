@@ -1,0 +1,95 @@
+{
+  "grammar": {
+    "nonTerminalSymbols": [
+      "S",
+      "A",
+      "B",
+      "C"
+    ],
+    "terminalSymbols": [
+      "a",
+      "b",
+      "c"
+    ],
+    "productionSetSymbol": "P",
+    "productionStartSymbol": "S",
+    "productionRules": [
+      {
+        "leftSide": "S",
+        "rightSide": [
+          "a",
+          "aB",
+          "C"
+        ]
+      },
+      {
+        "leftSide": "A",
+        "rightSide": [
+          "aaS",
+          "ε"
+        ]
+      },
+      {
+        "leftSide": "B",
+        "rightSide": [
+          "cC",
+          "bbB",
+          "a"
+        ]
+      },
+      {
+        "leftSide": "C",
+        "rightSide": [
+          "CCa",
+          "CS"
+        ]
+      }
+    ]
+  },
+  "step1": {
+    "nonTerminalSymbols": [
+      "S",
+      "A",
+      "B",
+      "C"
+    ],
+    "terminalSymbols": [
+      "a",
+      "b",
+      "c"
+    ],
+    "productionSetSymbol": "P",
+    "productionStartSymbol": "S",
+    "productionRules": [
+      {
+        "leftSide": "S",
+        "rightSide": [
+          "a",
+          "aB",
+          "C"
+        ]
+      },
+      {
+        "leftSide": "A",
+        "rightSide": [
+          "aaS",
+          "ε"
+        ]
+      },
+      {
+        "leftSide": "B",
+        "rightSide": [
+          "bbA",
+          "cC"
+        ]
+      },
+      {
+        "leftSide": "C",
+        "rightSide": [
+          "CCa",
+          "CS"
+        ]
+      }
+    ]
+  }
+}

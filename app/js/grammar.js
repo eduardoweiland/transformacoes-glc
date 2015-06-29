@@ -53,17 +53,30 @@ define(['knockout', 'productionrule', 'utils'], function(ko, ProductionRule, uti
 
         /**
          * @constructs
+         *
+         * @param {object} data Inicializa a gramática com as propriedades informadas nesse parâmetro.
          */
-        init: function() {
-            this.nonTerminalSymbols    = ko.observableArray([]);
-            this.terminalSymbols       = ko.observableArray([]);
-            this.productionSetSymbol   = ko.observable('');
-            this.productionStartSymbol = ko.observable('');
-            this.productionRules       = ko.observableArray([new ProductionRule(this)]);
+        init: function(data) {
+            data = data || {};
+
+            this.nonTerminalSymbols    = ko.observableArray(data.nonTerminalSymbols || []);
+            this.terminalSymbols       = ko.observableArray(data.terminalSymbols    || []);
+            this.productionSetSymbol   = ko.observable(data.productionSetSymbol     || '');
+            this.productionStartSymbol = ko.observable(data.productionStartSymbol   || '');
+            this.productionRules       = ko.observableArray([]);
 
             this.completed        = ko.pureComputed(this.isCompleted,       this);
             this.validationErrors = ko.pureComputed(this.validate,          this);
             this.formalism        = ko.pureComputed(this.toFormalismString, this);
+
+            if (data.productionRules) {
+            	for (var i = 0, l = data.productionRules.length; i < l; ++i) {
+                    this.productionRules.push(new ProductionRule(this, data.productionRules[i]));
+            	}
+            }
+            else {
+                this.productionRules.push(new ProductionRule(this));
+            }
         },
 
         /**
@@ -197,6 +210,21 @@ define(['knockout', 'productionrule', 'utils'], function(ko, ProductionRule, uti
                     break;
                 }
             }
+        },
+
+        removeSymbolRules: function(symbols) {
+            if (typeof symbols === 'string') {
+                symbols = [symbols];
+            }
+
+            var rules = this.productionRules();
+            for (var i = 0, l = rules.length; i < l; ++i) {
+                if (symbols.indexOf(rules[i].leftSide()) !== -1) {
+                    rules.splice(i--, 1);
+                    --l;
+                }
+            }
+            this.productionRules(rules);
         },
 
         /**

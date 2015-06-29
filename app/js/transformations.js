@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-define(['grammar', 'utils'], function(Grammar, utils) {
+define(['knockout', 'grammar', 'utils'], function(ko, Grammar, utils) {
     'use strict';
 
     /**
@@ -67,6 +67,30 @@ define(['grammar', 'utils'], function(Grammar, utils) {
         return unreachable;
     }
 
+    function findSterileSymbols(grammar) {
+        var steriles = [],
+            rules = grammar.productionRules();
+
+        for (var i = 0, l = rules.length; i < l; ++i) {
+            var found = false,
+                left  = rules[i].leftSide(),
+            	right = rules[i].rightSide();
+
+            for (var j = 0, k = right.length; j < k && !found; ++j) {
+                if (right[j].indexOf(left) === -1) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                steriles.push(left);
+            }
+        }
+
+        return steriles;
+    }
+
     return {
 
         /**
@@ -76,18 +100,15 @@ define(['grammar', 'utils'], function(Grammar, utils) {
          * @return {Grammar} Uma nova gramática sem os simbolos inúteis.
          */
         removeUselessSymbols: function(grammar) {
-            var newGrammar = new Grammar();
+            var newGrammar = new Grammar(ko.toJS(grammar));
 
-            var sterile = [],
+            var sterile = findSterileSymbols(grammar),
                 unreachable = findUnreachableSymbols(grammar),
                 nt = grammar.nonTerminalSymbols();
 
             // Remove os símbolos inalcançáveis e suas produções
             newGrammar.nonTerminalSymbols(utils.arrayRemove(nt, utils.arrayUnion(sterile, unreachable)));
-            newGrammar.terminalSymbols(grammar.terminalSymbols());
-            newGrammar.productionSetSymbol(grammar.productionSetSymbol());
-            newGrammar.productionStartSymbol(grammar.productionStartSymbol());
-            newGrammar.productionRules(grammar.productionRules());
+            newGrammar.removeSymbolRules(utils.arrayUnion(sterile, unreachable));
 
             return newGrammar;
         },
