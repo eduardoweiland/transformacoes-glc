@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-define(['knockout', 'grammar', 'utils'], function(ko, Grammar, utils) {
+define(['knockout', 'grammar', 'productionrule', 'utils'], function(ko, Grammar, ProductionRule, utils) {
     'use strict';
 
     /**
@@ -102,9 +102,9 @@ define(['knockout', 'grammar', 'utils'], function(ko, Grammar, utils) {
         removeUselessSymbols: function(grammar) {
             var newGrammar = new Grammar(ko.toJS(grammar));
 
-            var sterile = findSterileSymbols(grammar),
-                unreachable = findUnreachableSymbols(grammar),
-                nt = grammar.nonTerminalSymbols();
+            var sterile = findSterileSymbols(newGrammar),
+                unreachable = findUnreachableSymbols(newGrammar),
+                nt = newGrammar.nonTerminalSymbols();
 
             // Remove os símbolos inalcançáveis e suas produções
             newGrammar.nonTerminalSymbols(utils.arrayRemove(nt, utils.arrayUnion(sterile, unreachable)));
@@ -120,6 +120,38 @@ define(['knockout', 'grammar', 'utils'], function(ko, Grammar, utils) {
          * @return {Grammar} Uma nova gramática sem as produções vazias.
          */
         removeEmptyProductions: function(grammar) {
+        	var newGrammar = new Grammar(ko.toJS(grammar));
+
+            var rules = newGrammar.productionRules();
+            for (var i = 0, l = rules.length; i < l; ++i) {
+            	var left  = rules[i].leftSide();
+                var right = rules[i].rightSide();
+
+                var emptyIndex = right.indexOf(ProductionRule.EPSILON);
+                if (emptyIndex === -1) {
+                	// Essa regra não possui produção vazia, ignora e testa a próxima
+                	continue;
+                }
+
+                // Encontra todas as outras regras que produzem esse símbolo e adiciona uma nova
+                // produção sem esse símbolo
+                for (var j = 0; j < l; ++j) {
+                    var rightOther = rules[j].rightSide();
+                    for (var k = 0, m = rightOther.length; k < m; ++k) {
+                        if (rightOther[k].indexOf(left) !== -1) {
+                            rightOther.push(rightOther[k].replace(new RegExp(left, 'g'), ''));
+                        }
+                    }
+                    rules[j].rightSide(rightOther);
+                }
+
+                right.splice(emptyIndex, 1);
+                rules[i].rightSide(right);
+            }
+
+            newGrammar.productionRules(rules);
+
+            return newGrammar;
         },
 
         /**
@@ -132,10 +164,10 @@ define(['knockout', 'grammar', 'utils'], function(ko, Grammar, utils) {
         },
 
         /**
-         * Remove produções vazias de uma gramática.
+         * Remove recursão à esquerda de uma gramática.
          *
          * @param {Grammar} grammar Gramática de entrada.
-         * @return {Grammar} Uma nova gramática sem as produções vazias.
+         * @return {Grammar} Uma nova gramática sem recursão à esquerda.
          */
         removeLeftRecursion: function(grammar) {
         }

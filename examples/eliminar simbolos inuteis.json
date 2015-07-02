@@ -19,7 +19,8 @@
         "rightSide": [
           "a",
           "aB",
-          "C"
+          "C",
+          "baB"
         ]
       },
       {
@@ -34,7 +35,8 @@
         "rightSide": [
           "cC",
           "bbB",
-          "a"
+          "a",
+          "ε"
         ]
       },
       {
@@ -49,9 +51,7 @@
   "step1": {
     "nonTerminalSymbols": [
       "S",
-      "A",
-      "B",
-      "C"
+      "B"
     ],
     "terminalSymbols": [
       "a",
@@ -66,28 +66,52 @@
         "rightSide": [
           "a",
           "aB",
-          "C"
-        ]
-      },
-      {
-        "leftSide": "A",
-        "rightSide": [
-          "aaS",
-          "ε"
+          "C",
+          "baB"
         ]
       },
       {
         "leftSide": "B",
         "rightSide": [
-          "bbA",
-          "cC"
+          "cC",
+          "bbB",
+          "a",
+          "ε"
+        ]
+      }
+    ]
+  },
+  "step2": {
+    "nonTerminalSymbols": [
+      "S",
+      "B"
+    ],
+    "terminalSymbols": [
+      "a",
+      "b",
+      "c"
+    ],
+    "productionSetSymbol": "P",
+    "productionStartSymbol": "S",
+    "productionRules": [
+      {
+        "leftSide": "S",
+        "rightSide": [
+          "a",
+          "aB",
+          "C",
+          "baB",
+          "a",
+          "ba"
         ]
       },
       {
-        "leftSide": "C",
+        "leftSide": "B",
         "rightSide": [
-          "CCa",
-          "CS"
+          "cC",
+          "bbB",
+          "a",
+          "bb"
         ]
       }
     ]
