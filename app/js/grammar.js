@@ -70,9 +70,9 @@ define(['knockout', 'productionrule', 'utils'], function(ko, ProductionRule, uti
             this.formalism        = ko.pureComputed(this.toFormalismString, this);
 
             if (data.productionRules) {
-            	for (var i = 0, l = data.productionRules.length; i < l; ++i) {
+                for (var i = 0, l = data.productionRules.length; i < l; ++i) {
                     this.productionRules.push(new ProductionRule(this, data.productionRules[i]));
-            	}
+                }
             }
             else {
                 this.productionRules.push(new ProductionRule(this));
