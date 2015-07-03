@@ -108,10 +108,11 @@ define(['knockout', 'grammar', 'productionrule', 'utils'], function(ko, Grammar,
                 var rest = prods[j].substr(1);
 
                 for (var k = 0, m = otherProds.length; k < m; ++k) {
-                    prods.push(otherProds[k] + rest);
+                    otherProds[k] = otherProds[k] + rest;
                 }
 
-                prods.splice(j--, 1);
+                // Remove a produção que começa com não-terminal e adiciona as novas produções no lugar
+                prods.splice.apply(prods, [j--, 1].concat(otherProds));
             }
         }
 
