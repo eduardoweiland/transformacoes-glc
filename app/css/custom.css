@@ -77,6 +77,11 @@ footer {
     margin-bottom: 15px;
 }
 
+.formalism {
+    white-space: pre;
+    font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
+}
+
 /*****************************************/
 /**       CUSTOMIZAÇÃO TAGS INPUT       **/
 /*****************************************/

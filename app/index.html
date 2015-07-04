@@ -27,10 +27,10 @@
                 <i class="fa fa-folder-open"></i> Abrir
                 <input type="file" accept=".json" data-bind="event: { change: open }"/>
             </div>
-            <a href="https://github.com/eduardoweiland/transformacoes-glc" class="btn btn-info navbar-btn">
+            <a href="https://github.com/eduardoweiland/transformacoes-glc" class="btn btn-info navbar-btn" target="_blank">
                 <i class="fa fa-code"></i> Código Fonte
             </a>
-            <a href="https://github.com/eduardoweiland/transformacoes-glc/wiki" class="btn btn-info navbar-btn">
+            <a href="https://github.com/eduardoweiland/transformacoes-glc/wiki" class="btn btn-info navbar-btn" target="_blank">
                 <i class="fa fa-question"></i> Ajuda
             </a>
         </div>
@@ -86,6 +86,12 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <!-- ko foreach: validationErrors -->
+                            <div class="alert alert-danger text-center" role="alert" data-bind="text: $data"></div>
+                            <!-- /ko -->
+                            <pre data-bind="visible: completed, text: formalism"></pre>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -100,7 +106,7 @@
                         </h3>
                     </div>
                     <div class="panel-body" data-bind="with: step1">
-                        <pre data-bind="text: formalism"></pre>
+                        <div class="formalism" data-bind="text: formalism"></div>
                     </div>
                 </div>
                 <div class="panel panel-warning">
@@ -113,7 +119,7 @@
                         </h3>
                     </div>
                     <div class="panel-body" data-bind="with: step2">
-                        <pre data-bind="text: formalism"></pre>
+                        <div class="formalism" data-bind="text: formalism"></div>
                     </div>
                 </div>
                 <div class="panel panel-info">
@@ -126,7 +132,7 @@
                         </h3>
                     </div>
                     <div class="panel-body" data-bind="with: step3">
-                        <pre data-bind="text: formalism"></pre>
+                        <div class="formalism" data-bind="text: formalism"></div>
                     </div>
                 </div>
                 <div class="panel panel-success">
@@ -139,7 +145,7 @@
                         </h3>
                     </div>
                     <div class="panel-body" data-bind="with: step4">
-                        <pre data-bind="text: formalism"></pre>
+                        <div class="formalism" data-bind="text: formalism"></div>
                     </div>
                 </div>
             </div>
