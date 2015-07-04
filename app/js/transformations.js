@@ -165,6 +165,7 @@ define(['knockout', 'grammar', 'productionrule', 'utils'], function(ko, Grammar,
          */
         removeEmptyProductions: function(grammar) {
             var newGrammar = new Grammar(ko.toJS(grammar));
+            var newStart;
 
             var rules = newGrammar.productionRules();
             for (var i = 0, l = rules.length; i < l; ++i) {
@@ -175,6 +176,14 @@ define(['knockout', 'grammar', 'productionrule', 'utils'], function(ko, Grammar,
                 if (emptyIndex === -1) {
                     // Essa regra não possui produção vazia, ignora e testa a próxima
                     continue;
+                }
+
+                if (left === newGrammar.productionStartSymbol()) {
+                    // Início de produção pode gerar sentença vazia, então trata o caso especial
+                    newStart = new ProductionRule(newGrammar, {
+                        leftSide: left + "'",
+                        rightSide: [left, ProductionRule.EPSILON]
+                    });
                 }
 
                 // Encontra todas as outras regras que produzem esse símbolo e adiciona uma nova
@@ -191,6 +200,12 @@ define(['knockout', 'grammar', 'productionrule', 'utils'], function(ko, Grammar,
 
                 right.splice(emptyIndex, 1);
                 rules[i].rightSide(right);
+            }
+
+            if (newStart) {
+                rules.unshift(newStart);
+                newGrammar.productionStartSymbol(newStart.leftSide());
+                newGrammar.nonTerminalSymbols([newStart.leftSide()].concat(newGrammar.nonTerminalSymbols()));
             }
 
             newGrammar.productionRules(rules);
