@@ -132,11 +132,27 @@ define(['knockout', 'grammar', 'productionrule', 'utils'], function(ko, Grammar,
 
             var sterile = findSterileSymbols(newGrammar),
                 unreachable = findUnreachableSymbols(newGrammar),
+                useless = utils.arrayUnion(sterile, unreachable),
                 nt = newGrammar.nonTerminalSymbols();
 
-            // Remove os símbolos inalcançáveis e suas produções
+            // Remove os símbolos inalcançáveis...
             newGrammar.nonTerminalSymbols(utils.arrayRemove(nt, utils.arrayUnion(sterile, unreachable)));
-            newGrammar.removeSymbolRules(utils.arrayUnion(sterile, unreachable));
+            newGrammar.removeSymbolRules(useless);
+
+            // .. e as produções em que eles aparecem
+            var rules = newGrammar.productionRules();
+            for (var i = 0, l = rules.length; i < l; ++i) {
+                var right = rules[i].rightSide();
+                for (var j = 0, m = useless.length; j < m; ++j) {
+                    for (var k = 0; k < right.length; ++k) {
+                        if (right[k].indexOf(useless[j]) !== -1) {
+                            right.splice(k--, 1);
+                        }
+                    }
+                }
+                rules[i].rightSide(right);
+            }
+            newGrammar.productionRules(rules);
 
             return newGrammar;
         },
