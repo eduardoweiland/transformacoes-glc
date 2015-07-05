@@ -20,14 +20,16 @@
           "a",
           "aB",
           "C",
-          "baB"
+          "baB",
+          "caSb",
+          "ε"
         ]
       },
       {
         "leftSide": "A",
         "rightSide": [
           "aaS",
-          "ε"
+          "bBa"
         ]
       },
       {
@@ -36,6 +38,7 @@
           "cC",
           "bbB",
           "a",
+          "Bac",
           "ε"
         ]
       },
@@ -66,16 +69,17 @@
         "rightSide": [
           "a",
           "aB",
-          "C",
-          "baB"
+          "baB",
+          "caSb",
+          "ε"
         ]
       },
       {
         "leftSide": "B",
         "rightSide": [
-          "cC",
           "bbB",
           "a",
+          "Bac",
           "ε"
         ]
       }
@@ -83,6 +87,7 @@
   },
   "step2": {
     "nonTerminalSymbols": [
+      "S'",
       "S",
       "B"
     ],
@@ -92,26 +97,99 @@
       "c"
     ],
     "productionSetSymbol": "P",
-    "productionStartSymbol": "S",
+    "productionStartSymbol": "S'",
     "productionRules": [
+      {
+        "leftSide": "S'",
+        "rightSide": [
+          "S",
+          "ε"
+        ]
+      },
       {
         "leftSide": "S",
         "rightSide": [
           "a",
           "aB",
-          "C",
           "baB",
-          "a",
+          "caSb",
+          "cab",
           "ba"
         ]
       },
       {
         "leftSide": "B",
         "rightSide": [
-          "cC",
           "bbB",
           "a",
-          "bb"
+          "Bac",
+          "bb",
+          "ac"
+        ]
+      }
+    ]
+  },
+  "step3": {
+    "nonTerminalSymbols": [
+      "S'",
+      "S",
+      "B",
+      "S''",
+      "S'''",
+      "B'"
+    ],
+    "terminalSymbols": [
+      "a",
+      "b",
+      "c"
+    ],
+    "productionSetSymbol": "P",
+    "productionStartSymbol": "S'",
+    "productionRules": [
+      {
+        "leftSide": "S'",
+        "rightSide": [
+          "S",
+          "ε"
+        ]
+      },
+      {
+        "leftSide": "S",
+        "rightSide": [
+          "a",
+          "aB",
+          "bS''",
+          "cS'''"
+        ]
+      },
+      {
+        "leftSide": "S''",
+        "rightSide": [
+          "aB",
+          "a"
+        ]
+      },
+      {
+        "leftSide": "S'''",
+        "rightSide": [
+          "aSb",
+          "ab"
+        ]
+      },
+      {
+        "leftSide": "B",
+        "rightSide": [
+          "a",
+          "bB'",
+          "Bac",
+          "ac"
+        ]
+      },
+      {
+        "leftSide": "B'",
+        "rightSide": [
+          "bB",
+          "b"
         ]
       }
     ]
