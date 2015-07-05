@@ -91,11 +91,23 @@ define(['knockout', 'grammar', 'productionrule', 'utils'], function(ko, Grammar,
         return steriles;
     }
 
+    /**
+     * Substitui símbolos não terminais no começo de todas as produções pelas suas produções.
+     *
+     * @param {Grammar} grammar Gramática para ser modificada.
+     * @return {ProductionRule[]} Regras de produção modificadas.
+     */
     function replaceStartingSymbols(grammar) {
         var rules = grammar.productionRules();
         var nt = grammar.nonTerminalSymbols();
+        var s = grammar.productionStartSymbol();
 
         for (var i = 0, l = rules.length; i < l; ++i) {
+            if (rules[i].leftSide() === s) {
+                // Ignora produção inicial
+                continue;
+            }
+
             var prods = rules[i].rightSide();
             // Não usa cache do length porque o array é modificado internamente
             for (var j = 0; j < prods.length; ++j) {
@@ -150,7 +162,7 @@ define(['knockout', 'grammar', 'productionrule', 'utils'], function(ko, Grammar,
                         }
                     }
                 }
-                rules[i].rightSide(right);
+                rules[i].rightSide(utils.arrayUnique(right));
             }
             newGrammar.productionRules(rules);
 
@@ -195,11 +207,11 @@ define(['knockout', 'grammar', 'productionrule', 'utils'], function(ko, Grammar,
                             rightOther.push(rightOther[k].replace(new RegExp(left, 'g'), ''));
                         }
                     }
-                    rules[j].rightSide(rightOther);
+                    rules[j].rightSide(utils.arrayUnique(rightOther));
                 }
 
                 right.splice(emptyIndex, 1);
-                rules[i].rightSide(right);
+                rules[i].rightSide(utils.arrayUnique(right));
             }
 
             if (newStart) {
@@ -222,8 +234,54 @@ define(['knockout', 'grammar', 'productionrule', 'utils'], function(ko, Grammar,
         factor: function(grammar) {
             var newGrammar = new Grammar(ko.toJS(grammar));
             var rules = replaceStartingSymbols(newGrammar);
+            var newRules = [];
 
-            newGrammar.productionRules(rules);
+            for (var i = 0; i < rules.length; ++i) {
+                var left  = rules[i].leftSide();
+                var right = rules[i].rightSide();
+                var newRight = [];
+                var firstSymbolGrouped = {};
+
+                // Percorre todos as produções verificando quais precisam ser fatoradas
+                for (var j = 0, l = right.length; j < l; ++j) {
+                    if (right[j].length === 1) {
+                        // Produções com apenas um símbolo são deixadas como estão
+                        newRight.push(right[j]);
+                    }
+                    else {
+                        // Agrupa todas as produções que começam com o mesmo símbolo terminal
+                        var firstSymbol = right[j][0];
+                        if (!firstSymbolGrouped[firstSymbol]) {
+                            firstSymbolGrouped[firstSymbol] = [];
+                        }
+
+                        firstSymbolGrouped[firstSymbol].push(right[j].substr(1));
+                    }
+                }
+
+                // Adiciona a produção na mesma ordem que estava antes, antes das novas produções serem adicionadas
+                newRules.push(rules[i]);
+
+                for (var j in firstSymbolGrouped) {
+                    if (firstSymbolGrouped[j].length > 1) {
+                        // Mais de uma produção começando com o mesmo símbolo terminal
+                        newRight.push(j + left + "'");
+                        newRules.push(new ProductionRule(newGrammar, {
+                            leftSide: left + "'",
+                            rightSide: firstSymbolGrouped[j]
+                        }));
+                    }
+                    else {
+                        // Senão, é apenas uma produção (índice 0), mantém ela no mesmo lugar
+                        newRight.push(j + firstSymbolGrouped[j][0]);
+                    }
+                }
+
+                // Atualiza as produções para o símbolo existente
+                rules[i].rightSide(utils.arrayUnique(newRight));
+            }
+
+            newGrammar.productionRules(newRules);
             return newGrammar;
         },
 

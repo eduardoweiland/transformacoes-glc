@@ -25,7 +25,7 @@
 define(function() {
     'use strict';
 
-    return {
+    var utils = {
 
         /**
          * Retorna a intersecção entre os arrays `a` e `b`.
@@ -48,18 +48,7 @@ define(function() {
          * @returns {array} Um novo array.
          */
         arrayUnion: function(a, b) {
-            var other = [];
-            for (var i = 0, l = a.length; i < l; ++i) {
-                if (other.indexOf(a[i]) === -1) {
-                    other.push(a[i]);
-                }
-            }
-            for (var i = 0, l = b.length; i < l; ++i) {
-                if (other.indexOf(b[i]) === -1) {
-                    other.push(b[i]);
-                }
-            }
-            return other;
+            return utils.arrayUnique(a.concat(b));
         },
 
         /**
@@ -72,6 +61,18 @@ define(function() {
         arrayRemove: function(a, b) {
             return a.filter(function(i) {
                 return b.indexOf(i) === -1;
+            });
+        },
+
+        /**
+         * Cria um novo array com os valores passados, removendo as repetições.
+         *
+         * @param {array} array
+         * @returns {array} Um novo array
+         */
+        arrayUnique: function(array) {
+            return array.filter(function(value, index, self) {
+                return self.indexOf(value) === index;
             });
         },
 
@@ -104,5 +105,7 @@ define(function() {
         }
 
     };
+
+    return utils;
 
 });
