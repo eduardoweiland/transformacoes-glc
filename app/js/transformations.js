@@ -103,7 +103,8 @@ define(['knockout', 'grammar', 'productionrule', 'utils'], function(ko, Grammar,
         var s = grammar.productionStartSymbol();
 
         for (var i = 0, l = rules.length; i < l; ++i) {
-            if (rules[i].leftSide() === s) {
+            var left = rules[i].leftSide();
+            if (left === s) {
                 // Ignora produção inicial
                 continue;
             }
@@ -111,8 +112,9 @@ define(['knockout', 'grammar', 'productionrule', 'utils'], function(ko, Grammar,
             var prods = rules[i].rightSide();
             // Não usa cache do length porque o array é modificado internamente
             for (var j = 0; j < prods.length; ++j) {
-                if (nt.indexOf(prods[j][0]) === -1) {
-                    // Produção não começa com símbolo não-terminal, ignora
+                if ( (prods[j][0] === left) || (nt.indexOf(prods[j][0]) === -1) ) {
+                    // Produção começa com o próprio símbolo não-terminal (recursivo) ou
+                    // não começa com nenhum símbolo não-terminal, ignora as substituições
                     continue;
                 }
 
