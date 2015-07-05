@@ -265,9 +265,10 @@ define(['knockout', 'grammar', 'productionrule', 'utils'], function(ko, Grammar,
                 for (var j in firstSymbolGrouped) {
                     if (firstSymbolGrouped[j].length > 1) {
                         // Mais de uma produção começando com o mesmo símbolo terminal
-                        newRight.push(j + left + "'");
+                        var newSymbol = newGrammar.createNonTerminalSymbol(left);
+                        newRight.push(j + newSymbol);
                         newRules.push(new ProductionRule(newGrammar, {
-                            leftSide: left + "'",
+                            leftSide: newSymbol,
                             rightSide: firstSymbolGrouped[j]
                         }));
                     }

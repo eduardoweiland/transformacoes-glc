@@ -228,6 +228,24 @@ define(['knockout', 'productionrule', 'utils'], function(ko, ProductionRule, uti
         },
 
         /**
+         * Cria um novo símbolo não terminal único, adicionando apóstrofos para garantir que o símbolo não é repetido.
+         *
+         * @param {string} base Símbolo base para ser utilizado. Serão adicionados apóstrofos nesse símbolo.
+         * @returns {string} O símbolo criado.
+         */
+        createNonTerminalSymbol: function(base) {
+            var symbol = base;
+
+            // Evita símbolos repetidos adicionando apóstrofos ao símbolo
+            while (this.nonTerminalSymbols.indexOf(symbol) !== -1) {
+                symbol += "'";
+            }
+
+            this.nonTerminalSymbols.push(symbol);
+            return symbol;
+        },
+
+        /**
          * Verifica se a definição da gramática está completa (todas as informações inseridas).
          *
          * @return {boolean} Se a gramática está completamente definida.
