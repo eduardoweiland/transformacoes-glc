@@ -1,0 +1,23 @@
+{
+  "name": "requirejs-plugin-bower-examples",
+  "version": "0.0.6",
+  "homepage": "https://github.com/RodneyEbanks/requirejs-plugin-bower",
+  "authors": [
+    "rodneyebanks <rodney@rodneyebanks.com>"
+  ],
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.15",
+    "requirejs-plugin-bower": "*",
+    "requirejs-plugins": "~1.0.3"
+  }
+}

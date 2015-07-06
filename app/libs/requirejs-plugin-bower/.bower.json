@@ -1,0 +1,53 @@
+{
+  "name": "requirejs-plugin-bower",
+  "description": "Automatically configure Requirejs paths and shim settings for installed Bower components (InBrowser & InBuild)",
+  "authors": [
+    "Rodney Robert Ebanks <foss@rodneyebanks.com>"
+  ],
+  "homepage": "https://github.com/RodneyEbanks/requirejs-plugin-bower",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/RodneyEbanks/requirejs-plugin-bower"
+  },
+  "main": [
+    "dist/bower.js",
+    "dist/bower-bundle.js"
+  ],
+  "keywords": [
+    "requirejs",
+    "require",
+    "bower",
+    "config"
+  ],
+  "license": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    },
+    {
+      "type": "BSD",
+      "url": "http://www.opensource.org/licenses/BSD-3-Clause"
+    }
+  ],
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs-text": "~2.0.13",
+    "requirejs-plugins": "~1.0.3"
+  },
+  "_release": "1aff5f5f61",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "1aff5f5f613b1b3a8e1b4160cffdd5347af78904"
+  },
+  "_source": "git://github.com/RodneyEbanks/requirejs-plugin-bower.git",
+  "_target": "*",
+  "_originalSource": "requirejs-plugin-bower"
+}

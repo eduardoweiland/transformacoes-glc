@@ -1,0 +1,26 @@
+{
+  "name": "webfont-notosans",
+  "version": "0.1.0",
+  "authors": [
+    "James Harrison <james@jjlharrison.me.uk>"
+  ],
+  "description": "Google's Noto Sans webfont.",
+  "license": "Apache License 2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "homepage": "https://github.com/jjlharrison/webfont-notosans",
+  "_release": "0.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.0",
+    "commit": "0a09599a181ab4d6bbdc9515bd5cd56e1616228a"
+  },
+  "_source": "git://github.com/jjlharrison/webfont-notosans.git",
+  "_target": "~0.1.0",
+  "_originalSource": "webfont-notosans"
+}

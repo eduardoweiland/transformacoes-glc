@@ -1,0 +1,23 @@
+{
+  "name": "metro-bootstrap",
+  "main": [
+    "./dist/css/metro-bootstrap.css",
+    "./dist/fonts/font-awesome/*.*",
+    "./dist/fonts/glyphicons/*.*"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "font-awesome": "~4.0.0"
+  },
+  "devDependencies": {},
+  "homepage": "https://github.com/TalksLab/metro-bootstrap",
+  "_release": "e78da4171d",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "e78da4171d6ee5244ed0abec411112f7aa2baa6e"
+  },
+  "_source": "git://github.com/TalksLab/metro-bootstrap.git",
+  "_target": "*",
+  "_originalSource": "metro-bootstrap"
+}
