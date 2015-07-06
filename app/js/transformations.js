@@ -295,6 +295,51 @@ define(['knockout', 'grammar', 'productionrule', 'utils'], function(ko, Grammar,
          * @return {Grammar} Uma nova gramática sem recursão à esquerda.
          */
         removeLeftRecursion: function(grammar) {
+            var newGrammar = new Grammar(ko.toJS(grammar));
+            var rules = newGrammar.productionRules();
+            var newRules = [];
+
+            for (var i = 0, l = rules.length; i < l; ++i) {
+                var left = rules[i].leftSide();
+                var prods = rules[i].rightSide();
+                var recursives = [];
+
+                // Adiciona a produção na mesma ordem que estava antes, antes das nova produção ser adicionada
+                newRules.push(rules[i]);
+
+                // Não usa cache do length porque o array é modificado internamente
+                for (var j = 0; j < prods.length; ++j) {
+                    if (prods[j][0] === left && prods[j].length > 1) {
+                        // Encontrou produção recursiva, cria uma nova regra
+                        var newSymbol = newGrammar.createNonTerminalSymbol(left);
+                        recursives.push(newSymbol);
+                        newRules.push(new ProductionRule(newGrammar, {
+                            leftSide: newSymbol,
+                            rightSide: [prods[j].substr(1) + newSymbol, ProductionRule.EPSILON]
+                        }));
+
+                        // Remove essa produção
+                        prods.splice(j--, 1);
+                    }
+                }
+
+                var newProds = [];
+                if (recursives.length === 0) {
+                    newProds = prods.slice();
+                }
+                else {
+                    for (var j = 0; j < prods.length; ++j) {
+                        for (var k = 0; k < recursives.length; ++k) {
+                            newProds.push(prods[j] + recursives[k]);
+                        }
+                    }
+                }
+
+                rules[i].rightSide(newProds);
+            }
+
+            newGrammar.productionRules(newRules);
+            return newGrammar;
         }
 
     };
